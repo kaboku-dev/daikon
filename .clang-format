@@ -1,0 +1,23 @@
+---
+# clang-format configuration for Daikon.
+
+# Based on the Google C++ style; the deviations are listed below.
+BasedOnStyle: Google
+
+# Google uses 2 spaces; this project uses 4.
+IndentWidth: 4
+
+# The Google default (-1) assumes a 2-space indent; with IndentWidth: 4 it
+# would put public:/protected:/private: 3 spaces from the class keyword.
+# -4 puts them aligned with `class`.
+AccessModifierOffset: -4
+
+# Google derives pointer alignment from the surrounding code (the majority
+# wins). Disable that so formatting does not depend on existing code and
+# always produces `int* p`, which is the chosen style for this project.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Google style demands only consistency. This project uses left qualifier
+# alignment (`const int`, not `int const`).
+QualifierAlignment: Left

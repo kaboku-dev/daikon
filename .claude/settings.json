@@ -1,0 +1,22 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(git status)",
+            "Bash(git diff *)",
+            "Bash(git log *)",
+            "Bash(git add *)",
+            "Bash(cmake *)",
+            "Bash(ctest *)"
+        ],
+        "ask": [
+            "Bash(git commit *)"
+        ],
+        "deny": [
+            "Bash(git push *)",
+            "Bash(git rebase *)",
+            "Bash(git reset --hard *)",
+            "Bash(gh pr create *)",
+            "Bash(gh pr merge *)"
+        ]
+    }
+}

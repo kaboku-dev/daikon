@@ -1,0 +1,8 @@
+gdb rr
+valgrind strace
+clangd
+curl
+sudo
+less
+gh
+openssh-client

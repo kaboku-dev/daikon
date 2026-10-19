@@ -1,0 +1,12 @@
+{
+    "editor.rulers": [80],
+
+    "cmake.useCMakePresets": "always",
+    "cmake.configureOnOpen": true,
+
+    "files.associations": {
+        ".clang-format": "yaml",
+        ".clang-tidy": "yaml",
+        ".clangd": "yaml"
+    },
+}

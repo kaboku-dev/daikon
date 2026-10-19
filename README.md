@@ -6,6 +6,18 @@ Daikon is a portfolio project built to practice and demonstrate systems programm
 
 > **Status:** early development. Most of the features are not implemented yet.
 
+## Building
+
+Requirements: a C++20 compiler (GCC/Clang) and CMake >= 3.25.
+
+```sh
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+./build/src/daikon --help
+```
+
+A devcontainer with the full toolchain is provided in `.devcontainer/`.
+
 ## Goals
 
 - Be compatible with `redis-cli` and `redis-benchmark` via the RESP2 protocol

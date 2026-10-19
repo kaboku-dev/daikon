@@ -1,0 +1,60 @@
+{
+    "name": "Daikon",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {}, // claude-code needs it
+        "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+    },
+
+    "forwardPorts": [6379],
+    "portsAttributes": {
+        "6379": {
+            "label": "Daikon server (RESP2)"
+        }
+    },
+
+    "remoteUser": "vscode",
+    "updateRemoteUserUID": true,
+
+    "capAdd": ["SYS_PTRACE"],
+    "securityOpt": ["seccomp=unconfined"],
+
+    "postCreateCommand": "sh .devcontainer/postCreate.sh",
+
+    "mounts": [
+        {
+            "source": "daikon-devcontainer-home",
+            "target": "/home/vscode",
+            "type": "volume"
+        }
+    ],
+
+	"customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "llvm-vs-code-extensions.vscode-clangd",
+                "ms-vscode.cmake-tools",
+                "editorconfig.editorconfig",
+                // node feature installs it, the project doesn't need it
+                "-dbaeumer.vscode-eslint"
+            ],
+            "settings": {
+                "C_Cpp.intelliSenseEngine": "disabled",
+                "[cpp]": {
+                    "editor.defaultFormatter":
+                        "llvm-vs-code-extensions.vscode-clangd"
+                },
+                "[c]": {
+                    "editor.defaultFormatter":
+                        "llvm-vs-code-extensions.vscode-clangd"
+                },
+                "clangd.arguments": [
+                    "--query-driver=/usr/bin/g++*"
+                ]
+            }
+        }
+    }
+}

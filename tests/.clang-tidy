@@ -1,0 +1,27 @@
+---
+# Overrides for tests/. Inherits the root configuration and only disables
+# checks that misfire on GoogleTest code:
+#
+#  -cert-err58-cpp (alias of bugprone-throwing-static-initialization),
+#  -bugprone-throwing-static-initialization,
+#  -cppcoreguidelines-avoid-non-const-global-variables:
+#      TEST()/TEST_F() expand to static registration objects and globals.
+#
+#  -cppcoreguidelines-owning-memory: GoogleTest macros expand to raw `new`
+#      expressions that are not wrapped in gsl::owner, which results in false
+#      positives.
+#
+#  -cppcoreguidelines-special-member-functions: test fixtures do not need the
+#      rule of five.
+#
+#  -bugprone-unchecked-optional-access: false positives after
+#      ASSERT_TRUE(opt) / ASSERT_TRUE(opt.has_value()), because the check does
+#      not understand that the assertion aborts the test.
+InheritParentConfig: true
+Checks: >
+  -cert-err58-cpp,
+  -bugprone-throwing-static-initialization,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-special-member-functions,
+  -bugprone-unchecked-optional-access

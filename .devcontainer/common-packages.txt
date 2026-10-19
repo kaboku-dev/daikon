@@ -1,0 +1,7 @@
+build-essential
+gcc g++
+clang lld
+clang-tools clang-tidy clang-format
+cmake make ninja-build
+git ca-certificates
+redis-tools
