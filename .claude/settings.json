@@ -9,14 +9,16 @@
             "Bash(ctest *)"
         ],
         "ask": [
-            "Bash(git commit *)"
+            "Bash(git commit *)",
+            "Bash(sudo *)"
         ],
         "deny": [
             "Bash(git push *)",
             "Bash(git rebase *)",
             "Bash(git reset --hard *)",
             "Bash(gh pr create *)",
-            "Bash(gh pr merge *)"
+            "Bash(gh pr merge *)",
+            "Bash(su *)"
         ]
     }
 }
