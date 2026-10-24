@@ -16,6 +16,13 @@ cmake --build build
 ./build/src/daikon --help
 ```
 
+For development, use the CMake presets. A workflow preset configures, builds and runs the tests in one step:
+
+```sh
+cmake --workflow --preset gcc-debug         # GCC, debug
+cmake --workflow --preset clang-asan-ubsan  # Clang with ASan and UBSan
+```
+
 A devcontainer with the full toolchain is provided in `.devcontainer/`.
 
 ## Goals

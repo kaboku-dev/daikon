@@ -38,6 +38,7 @@
                 "llvm-vs-code-extensions.vscode-clangd",
                 "ms-vscode.cmake-tools",
                 "editorconfig.editorconfig",
+                "github.vscode-github-actions",
                 // node feature installs it, the project doesn't need it
                 "-dbaeumer.vscode-eslint"
             ],
