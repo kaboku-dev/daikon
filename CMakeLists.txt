@@ -4,6 +4,7 @@ project(daikon VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(DAIKON_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+option(DAIKON_BUILD_TESTS "Build the tests" ${PROJECT_IS_TOP_LEVEL})
 
 add_library(daikon_options INTERFACE)
 target_compile_features(daikon_options INTERFACE cxx_std_20)
@@ -14,3 +15,8 @@ if(DAIKON_WARNINGS_AS_ERRORS)
 endif()
 
 add_subdirectory(src)
+
+if(DAIKON_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

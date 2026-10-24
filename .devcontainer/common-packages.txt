@@ -1,6 +1,6 @@
 build-essential
 gcc g++
-clang lld
+clang lld libclang-rt-dev
 clang-tools clang-tidy clang-format
 cmake make ninja-build
 git ca-certificates

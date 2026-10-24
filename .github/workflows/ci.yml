@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+
+# Jobs run in the same Debian release as the devcontainer and install the same
+# .devcontainer/common-packages.txt, so CI uses the toolchain versions that
+# developers use. git is installed before checkout so that the checkout is a
+# real repository (needed by `git ls-files`).
+
+jobs:
+  format:
+    name: clang-format
+    runs-on: ubuntu-latest
+    container: debian:trixie-slim
+    timeout-minutes: 15
+    steps:
+      - name: Install tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ca-certificates git clang-format
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The workspace is owned by a different user than the container's root,
+      # which makes git refuse to run in it.
+      - name: Trust the workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Check formatting
+        run: |
+          git ls-files -z '*.cc' '*.h' | xargs -0 \
+            clang-format --dry-run --Werror
+
+  tidy:
+    name: clang-tidy
+    runs-on: ubuntu-latest
+    container: debian:trixie-slim
+    timeout-minutes: 15
+    steps:
+      - name: Install git
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install toolchain
+        run: |
+          xargs -a .devcontainer/common-packages.txt \
+            apt-get install -y --no-install-recommends
+
+      # Configuring is enough: it generates compile_commands.json and fetches
+      # the GoogleTest headers.
+      - name: Configure
+        run: cmake --preset clang-debug
+
+      - name: Run clang-tidy
+        run: run-clang-tidy -quiet -p build/clang-debug "$PWD/(src|tests)/"
+
+  build:
+    name: ${{ matrix.preset }}
+    runs-on: ubuntu-latest
+    container:
+      image: debian:trixie-slim
+      # LeakSanitizer (part of ASan) uses ptrace to stop threads.
+      options: --cap-add=SYS_PTRACE
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [gcc-debug, gcc-release, clang-asan-ubsan]
+    timeout-minutes: 15
+    steps:
+      - name: Install git
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install toolchain
+        run: |
+          xargs -a .devcontainer/common-packages.txt \
+            apt-get install -y --no-install-recommends
+
+      - name: Configure, build and test
+        run: cmake --workflow --preset ${{ matrix.preset }}
