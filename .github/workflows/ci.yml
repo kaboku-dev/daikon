@@ -35,9 +35,15 @@ jobs:
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # The workspace is owned by a different user than the container's root,
+      # which makes git refuse to run in it.
+      - name: Trust the workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Check formatting
-        run: git ls-files -z '*.cc' '*.h' | xargs -0 \
-          clang-format --dry-run --Werror
+        run: |
+          git ls-files -z '*.cc' '*.h' | xargs -0 \
+            clang-format --dry-run --Werror
 
   tidy:
     name: clang-tidy
@@ -53,8 +59,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install toolchain
-        run: xargs -a .devcontainer/common-packages.txt \
-          apt-get install -y --no-install-recommends
+        run: |
+          xargs -a .devcontainer/common-packages.txt \
+            apt-get install -y --no-install-recommends
 
       # Configuring is enough: it generates compile_commands.json and fetches
       # the GoogleTest headers.
@@ -85,8 +92,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install toolchain
-        run: xargs -a .devcontainer/common-packages.txt \
-          apt-get install -y --no-install-recommends
+        run: |
+          xargs -a .devcontainer/common-packages.txt \
+            apt-get install -y --no-install-recommends
 
       - name: Configure, build and test
         run: cmake --workflow --preset ${{ matrix.preset }}
