@@ -25,7 +25,7 @@ A devcontainer with the full toolchain is provided in `.devcontainer/`.
   - hash table (backing String, Hash and Set)
   - skip list (backing Sorted Set)
   - SDS (Simple Dynamic String, as in Redis) instead of `std::string`
-- Keep the code well tested and clean under sanitizers (ASan, UBSan, MSan)
+- Keep the code well tested and clean under sanitizers (ASan, UBSan)
 
 ## Design
 
