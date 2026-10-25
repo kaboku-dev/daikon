@@ -31,7 +31,7 @@
         }
     ],
 
-	"customizations": {
+    "customizations": {
         "vscode": {
             "extensions": [
                 "ms-vscode.cpptools",
