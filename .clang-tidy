@@ -63,6 +63,10 @@ CheckOptions:
     value: 2
   - key: readability-identifier-length.IgnoredVariableNames
     value: '^(i|j|n)$'
+  - key: readability-identifier-length.MinimumParameterNameLength
+    value: 2
+  - key: readability-identifier-length.IgnoredParameterNames
+    value: '^(i|j|n)$'
 
   # Naming follows the Google C++ Style Guide.
   - key: readability-identifier-naming.NamespaceCase
