@@ -21,3 +21,13 @@ PointerAlignment: Left
 # Google style demands only consistency. This project uses left qualifier
 # alignment (`const int`, not `int const`).
 QualifierAlignment: Left
+
+# Google style demands only that attributes appear at the very beginning of the
+# function declaration or definition, without specifying whether a line break
+# should be added or not. This project enforces a line break after attributes.
+BreakAfterAttributes: Always
+
+# Google strips blank lines at the start of a block. Allow them so a long
+# multi-line signature can be visually separated from the body.
+KeepEmptyLines:
+  AtStartOfBlock: true
