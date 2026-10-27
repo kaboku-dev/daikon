@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(daikon VERSION 0.0.1 LANGUAGES CXX)
+project(daikon VERSION 0.0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
