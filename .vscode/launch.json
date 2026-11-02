@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
-            "args": [],
+            "args": ["--log-level", "debug"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

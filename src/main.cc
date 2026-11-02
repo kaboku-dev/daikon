@@ -1,14 +1,29 @@
+#include <cstddef>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <span>
+#include <string_view>
+#include <vector>
 
+#include "config.h"
 #include "logger.h"
 
 namespace daikon {
 namespace {
 
-int Run() {
-    std::cout << "Hello world!\n";
+int Run(int argc, char** argv) {
+    const std::span<char*> raw{argv, static_cast<std::size_t>(argc)};
+    const std::vector<std::string_view> args{raw.begin(), raw.end()};
+
+    const auto config = ParseArgs(args);
+    if (!config) {
+        return EXIT_SUCCESS;  // --help / --version
+    }
+
+    SetLogLevel(config->log_level);
+
+    std::cout << "Parsed config!\n";
 
     return EXIT_SUCCESS;
 }
@@ -16,9 +31,9 @@ int Run() {
 }  // namespace
 }  // namespace daikon
 
-int main() {
+int main(int argc, char** argv) {
     try {
-        return daikon::Run();
+        return daikon::Run(argc, argv);
     } catch (const std::exception& e) {
         daikon::LogError("Fatal: {}", e.what());
     } catch (...) {

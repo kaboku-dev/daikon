@@ -13,10 +13,11 @@ set(INSTALL_GTEST OFF)
 FetchContent_MakeAvailable(googletest)
 
 add_executable(daikon_tests
-    smoke_test.cc
+    config_test.cc
 )
 target_link_libraries(daikon_tests
     PRIVATE
+        daikon_core
         daikon_options
         GTest::gtest_main
 )

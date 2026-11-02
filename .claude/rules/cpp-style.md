@@ -3,6 +3,7 @@ description: C++ style and safety rules
 paths:
   - "**/*.cc"
   - "**/*.h"
+  - "**/*.h.in"
 ---
 
 - C++20 only. Do not use later-standard features.
