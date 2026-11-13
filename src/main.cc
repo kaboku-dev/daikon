@@ -1,13 +1,14 @@
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
-#include <iostream>
 #include <span>
 #include <string_view>
 #include <vector>
 
 #include "config.h"
 #include "logger.h"
+#include "server.h"
+#include "signals.h"
 
 namespace daikon {
 namespace {
@@ -23,7 +24,12 @@ int Run(int argc, char** argv) {
 
     SetLogLevel(config->log_level);
 
-    std::cout << "Parsed config!\n";
+    // Must precede any thread creation; see SignalManager.
+    const SignalManager signal_manager;
+
+    Server server{*config};
+    // All handled signals mean shutdown for now, so the signal fd is stop fd.
+    server.Run(signal_manager.fd());
 
     return EXIT_SUCCESS;
 }

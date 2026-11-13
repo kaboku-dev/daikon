@@ -14,6 +14,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(daikon_tests
     config_test.cc
+    server_test.cc
+    signals_test.cc
 )
 target_link_libraries(daikon_tests
     PRIVATE
