@@ -7,6 +7,8 @@ configure_file(
 add_library(daikon_core STATIC
     logger.cc
     config.cc
+    server.cc
+    signals.cc
 )
 
 target_link_libraries(daikon_core PRIVATE daikon_options)
