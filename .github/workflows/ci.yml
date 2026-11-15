@@ -124,10 +124,14 @@ jobs:
         run: cmake --workflow --preset gcc-coverage
 
       # Only src/ is measured: tests and third-party code are not.
+      # Compiler-generated branches (exception paths of every call that may
+      # throw, branches on lines with no code) are excluded: they are not
+      # decisions in the code and would show up as partially covered lines.
       - name: Generate coverage report
         run: |
-          gcovr --root . --filter src/ --cobertura coverage.xml \
-            --print-summary build/gcc-coverage
+          gcovr --root . --filter src/ \
+            --exclude-throw-branches --exclude-unreachable-branches \
+            --cobertura coverage.xml --print-summary build/gcc-coverage
 
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
