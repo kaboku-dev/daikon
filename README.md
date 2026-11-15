@@ -1,5 +1,8 @@
 # Daikon
 
+[![CI](https://github.com/kaboku-dev/daikon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kaboku-dev/daikon/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/kaboku-dev/daikon/graph/badge.svg?branch=main)](https://codecov.io/gh/kaboku-dev/daikon)
+
 A simple key-value store and data structure server (a mini-Redis clone) written in C++20.
 
 Daikon is a portfolio project built to practice and demonstrate systems programming in C++: memory management, data structures, algorithms and networking. The guiding idea is **minimum features, maximum craftsmanship**: a small, readable codebase rather than a feature-complete Redis replacement.
