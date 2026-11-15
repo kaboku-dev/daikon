@@ -98,3 +98,41 @@ jobs:
 
       - name: Configure, build and test
         run: cmake --workflow --preset ${{ matrix.preset }}
+
+  coverage:
+    name: coverage
+    runs-on: ubuntu-latest
+    container: debian:trixie-slim
+    timeout-minutes: 15
+    steps:
+      - name: Install git
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates git
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # curl and gpg are needed by the Codecov action to download and verify its
+      # uploader.
+      - name: Install toolchain
+        run: |
+          xargs -a .devcontainer/common-packages.txt \
+            apt-get install -y --no-install-recommends
+          apt-get install -y --no-install-recommends gcovr curl gpg
+
+      - name: Configure, build and test
+        run: cmake --workflow --preset gcc-coverage
+
+      # Only src/ is measured: tests and third-party code are not.
+      - name: Generate coverage report
+        run: |
+          gcovr --root . --filter src/ --cobertura coverage.xml \
+            --print-summary build/gcc-coverage
+
+      - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.xml
+          disable_search: true
+          plugins: noop
+          fail_ci_if_error: true

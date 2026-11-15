@@ -31,6 +31,14 @@
             }
         },
         {
+            "name": "gcc-coverage",
+            "inherits": "gcc-debug",
+            "binaryDir": "${sourceDir}/build/gcc-coverage",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "--coverage"
+            }
+        },
+        {
             "name": "clang-debug",
             "inherits": [
                 "base",
@@ -68,6 +76,10 @@
             "configurePreset": "gcc-debug"
         },
         {
+            "name": "gcc-coverage",
+            "configurePreset": "gcc-coverage"
+        },
+        {
             "name": "clang-debug",
             "configurePreset": "clang-debug"
         },
@@ -96,6 +108,11 @@
             "name": "gcc-debug",
             "inherits": "base",
             "configurePreset": "gcc-debug"
+        },
+        {
+            "name": "gcc-coverage",
+            "inherits": "base",
+            "configurePreset": "gcc-coverage"
         },
         {
             "name": "clang-debug",
@@ -132,6 +149,23 @@
                 {
                     "type": "test",
                     "name": "gcc-debug"
+                }
+            ]
+        },
+        {
+            "name": "gcc-coverage",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc-coverage"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc-coverage"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc-coverage"
                 }
             ]
         },
